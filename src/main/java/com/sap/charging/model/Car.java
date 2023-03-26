@@ -3,6 +3,7 @@ package com.sap.charging.model;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.math.*;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -216,12 +217,16 @@ public class Car implements JSONSerializable, Loggable {
 	}
 	
 	private void sanityCheckPhases() {
+		double minCurrentResult = new BigDecimal(minCurrentPerPhase).multiply(
+			new BigDecimal(sumUsedPhases), new MathContext(16)).doubleValue();
+		double maxCurrentResult = new BigDecimal(maxCurrentPerPhase).multiply(
+			new BigDecimal(sumUsedPhases), new MathContext(16)).doubleValue();
 		// Sum of used phases * minCurrentPerPhase should equal minCurrent
-		if (sumUsedPhases * minCurrentPerPhase != minCurrent) {
+		if (minCurrentResult != minCurrent) {
 			throw new IllegalArgumentException("SumUsedPhases (" + sumUsedPhases + ") * minCurrentPerPhase (" + minCurrentPerPhase + ") should equal minCurrent ( " + minCurrent + ")"); 
 		}
 		// Sum of used phases * maxCurrentPerPhase should equal maxCurrent
-		if (sumUsedPhases * maxCurrentPerPhase != maxCurrent) {
+		if (maxCurrentResult != maxCurrent) {
 			throw new IllegalArgumentException("SumUsedPhases (" + sumUsedPhases + ") * maxCurrentPerPhase (" + maxCurrentPerPhase + ") should equal maxCurrent ( " + maxCurrent + ")"); 
 		}
 	}
