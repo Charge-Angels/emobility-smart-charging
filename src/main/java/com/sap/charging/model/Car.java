@@ -212,7 +212,7 @@ public class Car implements JSONSerializable, Loggable {
 		this.carBattery = new CarBattery(this, startCapacity, maxCapacity, nonlinearCharging, batteryData);
 		
 		this.setCurrentPlan(currentPlan);
-		this.sanityCheckPhases(); 
+		// this.sanityCheckPhases(); 
 	}
 	
 	private void sanityCheckPhases() {
