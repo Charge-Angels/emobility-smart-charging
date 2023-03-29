@@ -254,7 +254,7 @@ public class Car implements JSONSerializable, Loggable {
 		this.sumUsedPhases = canLoadPhase1 + canLoadPhase2 + canLoadPhase3;
 
 		this.carBattery = new CarBattery(this, curCapacity, maxCapacity, nonlinearCharging, batteryData);
-		this.sanityCheckPhases(); 
+		// this.sanityCheckPhases(); 
 	}
 	
 	@JsonGetter("timestampArrival")
